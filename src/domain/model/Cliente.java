@@ -1,12 +1,6 @@
 package domain.model;
 
-/**
- * Entidade de dominio: Cliente
- *
- * O dominio e o nucleo da Arquitetura Hexagonal.
- * Contem apenas as regras de negocio puras, sem depender
- * de nenhuma tecnologia externa (banco de dados, console, etc.).
- */
+// Entidade central do dominio. Nao depende de nenhuma tecnologia externa.
 public class Cliente {
 
     private Long id;

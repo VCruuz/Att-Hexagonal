@@ -10,23 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-/**
- * Adapter de entrada: ClienteConsoleAdapter
- *
- * Um Adapter de entrada recebe estimulos do mundo externo e os
- * traduz em chamadas aos Ports de Entrada (Use Cases) do nucleo.
- *
- * Neste projeto, o mundo externo e o console (teclado do usuario).
- * Em outro contexto, poderia ser:
- *   - ClienteRestAdapter    -> recebe requisicoes HTTP
- *   - ClienteGrpcAdapter    -> recebe chamadas gRPC
- *
- * Este adapter depende apenas das interfaces (Ports), nunca
- * das implementacoes concretas. Isso garante o desacoplamento total.
- */
+// Adapter de entrada: recebe comandos do console e aciona os casos de uso.
 public class ClienteConsoleAdapter {
 
-    // Dependencias declaradas como interfaces (Ports de Entrada)
     private final CadastrarClienteUseCase cadastrarUseCase;
     private final ListarClientesUseCase   listarUseCase;
     private final BuscarClienteUseCase    buscarUseCase;
@@ -34,10 +20,6 @@ public class ClienteConsoleAdapter {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    /**
-     * Recebe as dependencias por injecao, todas como interfaces.
-     * Na pratica, o mesmo objeto (ClienteService) implementa todas elas.
-     */
     public ClienteConsoleAdapter(CadastrarClienteUseCase cadastrarUseCase,
                                   ListarClientesUseCase   listarUseCase,
                                   BuscarClienteUseCase    buscarUseCase,
@@ -48,7 +30,6 @@ public class ClienteConsoleAdapter {
         this.removerUseCase   = removerUseCase;
     }
 
-    // Inicia o loop principal do menu no console
     public void iniciar() {
         int opcao = -1;
 
@@ -76,8 +57,6 @@ public class ClienteConsoleAdapter {
 
     private void exibirMenu() {
         System.out.println("\n------------------------------");
-        System.out.println("  MENU PRINCIPAL");
-        System.out.println("------------------------------");
         System.out.println("  1 - Cadastrar Cliente");
         System.out.println("  2 - Listar Clientes");
         System.out.println("  3 - Buscar Cliente por ID");
@@ -99,13 +78,11 @@ public class ClienteConsoleAdapter {
         System.out.println("\n[ CADASTRAR CLIENTE ]");
         System.out.print("Nome  : ");
         String nome = scanner.nextLine().trim();
-
         System.out.print("E-mail: ");
         String email = scanner.nextLine().trim();
 
-        // Chamada ao Port de Entrada
         Cliente cliente = cadastrarUseCase.cadastrar(nome, email);
-        System.out.println("Cliente cadastrado com sucesso: " + cliente);
+        System.out.println("Cliente cadastrado: " + cliente);
     }
 
     private void listarClientes() {
